@@ -12,13 +12,13 @@ pm.test("Validando o status code igual a 200", function () {
 });  
 
 pm.test("Validando o body do response contem a string weather", function () {  
-    pm.expect(pm.response.text()).to.include("weather");  
+   pm.expect(pm.response.text()).to.include("weather");  
 });  
 
 pm.test("Validando dados da resposta da requisicao", function () {  
-    console.log(bodyResponse.sys.country + "=" + country)  
-    pm.expect(bodyResponse.sys.country).to.equal(country)  
-    pm.expect(bodyResponse.name).to.equal(state)  
+   console.log(bodyResponse.sys.country + "=" + country)  
+   pm.expect(bodyResponse.sys.country).to.equal(country)    
+   pm.expect(bodyResponse.name).to.equal(state)  
    pm.expect(bodyResponse.cod).to.be.equal(200)  
 });  
 
