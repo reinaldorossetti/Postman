@@ -1,0 +1,107 @@
+{
+	"info": {
+		"_postman_id": "0d5b89a8-bdb8-4617-a88b-83eea4cbd216",
+		"name": "Openweathermap",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Call current weather data for one location",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"const bodyResponse = pm.response.json();\r",
+							"\r",
+							"const state = pm.iterationData.get(\"State\");\r",
+							"const country = pm.iterationData.get(\"CountryCode\");\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Body matches string\", function () {\r",
+							"    pm.expect(pm.response.text()).to.include(\"weather\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Status code name has string\", function () {\r",
+							"    pm.expect(bodyResponse.sys.country).to.equal(\"US\")\r",
+							"    pm.expect(bodyResponse.name).to.equal(state)\r",
+							"    pm.expect(bodyResponse.cod).to.be.equal(200)\r",
+							"});\r",
+							"\r",
+							"\r",
+							"const schema = {\r",
+							"    \"type\": \"object\",\r",
+							"    \"properties\": {\r",
+							"        \"name\": { \"type\": \"string\" },\r",
+							"        \"id\": { \"type\": \"integer\" },\r",
+							"        \"temp\": {\"type\": \"float\"},\r",
+							"        \"temp_min\": {\"type\": \"float\"},\r",
+							"        \"temp_max\": {\"type\": \"float\"},\r",
+							"    }\r",
+							"};\r",
+							"pm.test('Schema is valid', function () {\r",
+							"    pm.expect(tv4.validate(bodyResponse, schema)).to.be.true;\r",
+							"});\r",
+							""
+						]
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"// pm.environment.set(\"State\", \"Alabama\");\r",
+							"// pm.environment.set(\"StateCode\", \"AL\");\r",
+							"// pm.environment.set(\"CountryCode\", \"US\");\r",
+							"\r",
+							"// For temperature in Fahrenheit use units=imperial\r",
+							"// For temperature in Celsius use units=metric\r",
+							"// Temperature in Kelvin is used by default, no need to use units parameter in API call\r",
+							"\r",
+							"pm.environment.set(\"units\", \"metric\");\r",
+							"pm.environment.set(\"appid\", \"e2f1d841cc16cff49a0aa18b531d71e0\");\r",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "api.openweathermap.org/data/2.5/weather?q={{State}},{{StateCode}},{{CountryCode}}&units={{units}}&appid={{appid}}",
+					"host": [
+						"api",
+						"openweathermap",
+						"org"
+					],
+					"path": [
+						"data",
+						"2.5",
+						"weather"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "{{State}},{{StateCode}},{{CountryCode}}"
+						},
+						{
+							"key": "units",
+							"value": "{{units}}"
+						},
+						{
+							"key": "appid",
+							"value": "{{appid}}"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
