@@ -9,38 +9,37 @@ on:
   pull_request:
     branches: [ main ]
   schedule:
-    # * is a special character in YAML so you have to quote this string
-    - cron:  '30 12 * * *'
+    # 30 minute (0 - 59), 23 hour (0 - 23), * (Todos) day of the month (1 - 31), * (Todos) month (1 - 12)
+    - cron:  '30 23 * * *'
 
 jobs:
   newman:
     runs-on: ubuntu-latest
     steps:
+        # 1 - Step - Install dependences.
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2-beta
         with:
           node-version: '12'
       - run: npm install -g newman
       - run: npm install -g newman-reporter-htmlextra
-      
-          # Make directory to upload the test results
-      - name: Make Directory for results
-        run: mkdir -p testResults
 
-
-      # Run the POSTMAN collection
-      - name: Run POSTMAN collection
+      # 2 -Step - Run the POSTMAN collection
+      - name: Step 2 - Run POSTMAN collection
         if: always()
         continue-on-error: true
         run: |
+          mkdir -p testResults
           newman run collections/Openweathermap.postman_collection.json --iteration-data dataset/data.json -r htmlextra --reporter-htmlextra-export testResults/index.html
-      # Upload the contents of Test Results directory to workspace
-      - name: Output the run Details
+      
+      # 3 - Steps - Upload the contents of Test Results directory to workspace
+      - name: Step 3 - Output the run Details
         uses: actions/upload-artifact@v2
         with: 
          name: RunReports
          path: testResults
          
+      # 4 - Steps - Allure History
       - name: Step 4 - Get allure history
         uses: actions/checkout@v2
         if: always()
@@ -49,7 +48,8 @@ jobs:
           ref: gh-pages-newman
           path: gh-pages-newman
           
-      - name: Step 6 - Deploy report to Github Pages
+      # Step 5 - Deploy report to Github Pages
+      - name: Step 5 - Deploy report to Github Pages
         if: always()
         uses: peaceiris/actions-gh-pages@v2
         env:
