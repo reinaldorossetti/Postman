@@ -1,0 +1,8 @@
+{
+  "dependencies": {
+    "bluebird": "^3.7.2",
+    "fs": "*",
+    "newman": "^5.3.1",
+    "path": "^0.12.7"
+  }
+}
