@@ -1,0 +1,10 @@
+// pm.environment.set("State", "Alabama");
+// pm.environment.set("StateCode", "AL");
+// pm.environment.set("CountryCode", "US");
+
+// For temperature in Fahrenheit use units=imperial
+// For temperature in Celsius use units=metric
+// Temperature in Kelvin is used by default, no need to use units parameter in API call
+
+pm.environment.set("units", "metric");
+pm.environment.set("appid", "e2f1d841cc16cff49a0aa18b531d71e0");
