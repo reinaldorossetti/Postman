@@ -12,7 +12,7 @@ on:
 
 jobs:
   newman:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
         # 1 - Step - Install dependences.
       - uses: actions/checkout@v2
