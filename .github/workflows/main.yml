@@ -28,7 +28,7 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p testResults
-          newman run collections/Openweathermap.postman_collection.json --iteration-data dataset/data.json -r allure --reporter-allure-export testResults/index.html
+          newman run collections/Openweathermap.postman_collection.json --iteration-data dataset/data.json -r allure --reporter-allure-export testResults/
       
       # 3 - Steps - Upload the contents of Test Results directory to workspace
       - name: Step 3 - Output the run Details
