@@ -28,14 +28,13 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p testResults
-          newman run collections/Openweathermap.postman_collection.json --iteration-data dataset/data.json -r allure --reporter-allure-export testResults/
+          newman run collections/Openweathermap.postman_collection.json --iteration-data dataset/data.json -r allure
       
       # 3 - Steps - Upload the contents of Test Results directory to workspace
       - name: Step 3 - Output the run Details
         uses: actions/upload-artifact@v2
         with: 
          name: RunReports
-         path: testResults
          
       # 4 - Steps - Allure History
       - name: Step 4 - Get allure history
@@ -53,5 +52,5 @@ jobs:
         env:
             PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             PUBLISH_BRANCH: gh-pages-newman
-            PUBLISH_DIR: testResults
+            PUBLISH_DIR: allure-history
             
