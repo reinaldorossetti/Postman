@@ -19,8 +19,8 @@ jobs:
       - uses: actions/setup-node@v2-beta
         with:
           node-version: '12'
-      - run: npm install -g newman
-      - run: npm install -g newman-reporter-allure
+      - run: npm install -g newman  |
+             npm install -g newman-reporter-allure
 
       # 2 -Step - Run the POSTMAN collection
       - name: Step 2 - Run POSTMAN collection
