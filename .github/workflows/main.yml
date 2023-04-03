@@ -19,14 +19,14 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: npm install -g newman  |
-             npm install -g newman-reporter-allure
+      - run: npm install -g newman
 
       # 2 -Step - Run the POSTMAN collection
       - name: Step 2 - Run POSTMAN collection
         if: always()
         continue-on-error: true
         run: |
+          npm install -g newman-reporter-allure |
           newman run collections/Openweathermap.postman_collection.json --iteration-data dataset/data.json -r allure
       
       # 3 - Steps - Upload the contents of Test Results directory to workspace
