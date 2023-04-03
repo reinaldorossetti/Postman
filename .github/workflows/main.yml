@@ -19,15 +19,16 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
-      - run: npm install -g newman
+      - run: npm install -g newman | 
+             npm install -g allure-commandline --save-dev |
+             npm install -g newman-reporter-allure 
 
       # 2 -Step - Run the POSTMAN collection
       - name: Step 2 - Run POSTMAN collection
         if: always()
         continue-on-error: true
         run: |
-          npm install -g newman-reporter-allure |
-          newman run collections/Openweathermap.postman_collection.json --iteration-data dataset/data.json -r allure
+             newman run collections/Openweathermap.postman_collection.json --iteration-data dataset/data.json -r allure
       
       # 3 - Steps - Upload the contents of Test Results directory to workspace
       - name: Step 3 - Output the run Details
@@ -35,14 +36,16 @@ jobs:
         with: 
          name: RunReports
          
-      # 4 - Steps - Allure History
-      - name: Step 4 - Get allure history
-        uses: actions/checkout@v2
-        if: always()
-        continue-on-error: true
+      - name: Mostra as pastas
+        run: ls -la
+      - name:  Step 4 - Collect Allure files and generate allure-report folder
+        run: |
+          allure generate ./allure-results -o allure-report/
+      - name: 🎁 Step 4 - Publishing Allure artifact to GitHub Actions
+        uses: actions/upload-artifact@v3
         with:
-          ref: gh-pages-newman
-          path: gh-pages-newman
+          name: allure-report
+          path: allure-report
           
       # Step 5 - Deploy report to Github Pages
       - name: Step 5 - Deploy report to Github Pages
@@ -51,5 +54,5 @@ jobs:
         env:
             PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             PUBLISH_BRANCH: gh-pages-newman
-            PUBLISH_DIR: allure-history
+            PUBLISH_DIR: allure-report
             
