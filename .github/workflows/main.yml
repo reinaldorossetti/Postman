@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: '12'
       - run: npm install -g newman
-      - run: npm install -g newman-reporter-htmlextra
+      - run: npm install -g newman-reporter-allure
 
       # 2 -Step - Run the POSTMAN collection
       - name: Step 2 - Run POSTMAN collection
@@ -28,7 +28,7 @@ jobs:
         continue-on-error: true
         run: |
           mkdir -p testResults
-          newman run collections/Openweathermap.postman_collection.json --iteration-data dataset/data.json -r htmlextra --reporter-htmlextra-export testResults/index.html
+          newman run collections/Openweathermap.postman_collection.json --iteration-data dataset/data.json -r allure --reporter-allure-export testResults/index.html
       
       # 3 - Steps - Upload the contents of Test Results directory to workspace
       - name: Step 3 - Output the run Details
