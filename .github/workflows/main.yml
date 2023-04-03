@@ -31,7 +31,7 @@ jobs:
              newman run collections/Openweathermap.postman_collection.json --iteration-data dataset/data.json -r allure
         
       - name: Mostra as pastas
-        run: ls -la
+        run: dir
       - name:  Step 4 - Collect Allure files and generate allure-report folder
         run: |
           allure generate ./allure-results -o allure-report/
@@ -44,7 +44,7 @@ jobs:
       # Step 5 - Deploy report to Github Pages
       - name: Step 5 - Deploy report to Github Pages
         if: always()
-        uses: peaceiris/actions-gh-pages@v2
+        uses: peaceiris/actions-gh-pages@v3
         env:
             PERSONAL_TOKEN: ${{ secrets.GITHUB_TOKEN }}
             PUBLISH_BRANCH: gh-pages-newman
