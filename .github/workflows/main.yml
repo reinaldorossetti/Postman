@@ -27,7 +27,6 @@ jobs:
         if: always()
         continue-on-error: true
         run: |
-          mkdir -p testResults
           newman run collections/Openweathermap.postman_collection.json --iteration-data dataset/data.json -r allure
       
       # 3 - Steps - Upload the contents of Test Results directory to workspace
